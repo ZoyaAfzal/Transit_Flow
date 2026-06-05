@@ -4,12 +4,8 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
-
-import appCss from "../styles.css?url";
+import { useEffect } from "react";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { MagneticCursor } from "@/components/ui/MagneticCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
@@ -79,52 +75,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TransitFlow — Driving the Future of Freight" },
-      {
-        name: "description",
-        content:
-          "Global freight & logistics. TransitFlow moves your world forward with real-time tracking across 180+ countries.",
-      },
-      { property: "og:title", content: "TransitFlow — Driving the Future of Freight" },
-      {
-        property: "og:description",
-        content:
-          "Global freight & logistics. Real-time tracking, guaranteed timelines, zero excuses.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap",
-      },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en" className="dark">
-      <head>
-        <HeadContent />
-      </head>
-      <body className="cursor-none-all bg-brand-black text-brand-white">
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
